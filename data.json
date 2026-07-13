@@ -214,13 +214,13 @@
       "month": "2026-06",
       "mea_units": 5102.0,
       "mea_total": 24809.24,
-      "mwa_units": null,
-      "mwa_total": null
+      "mwa_units": 149.0,
+      "mwa_total": 1881.15
     }
   ],
   "stats": {
     "mea_ytd": 211304.49,
-    "mwa_ytd": 13332.53,
+    "mwa_ytd": 15213.68,
     "mea_ytd_prev": 311155.47,
     "mwa_ytd_prev": 19822.46,
     "current_year": "2026",
