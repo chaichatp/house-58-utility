@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>HOUSE-58 Utility</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+:root {
+  --bg:       #f5f7fa;
+  --surface:  #ffffff;
+  --border:   #e2e8f0;
+  --text:     #1e293b;
+  --muted:    #94a3b8;
+  --blue:     #2563eb;
+  --blue-dim: rgba(37,99,235,.12);
+  --teal:     #0d9488;
+  --teal-dim: rgba(13,148,136,.12);
+  --yellow:   #d97706;
+  --red:      #dc2626;
+  --green:    #16a34a;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: var(--bg); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: 14px; }
+
+header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 16px 24px; border-bottom: 1px solid var(--border);
+  background: var(--surface);
+}
+.logo { display: flex; align-items: center; gap: 10px; }
+.logo-icon { font-size: 22px; }
+h1 { font-size: 17px; font-weight: 600; }
+.sub { color: var(--muted); font-size: 12px; margin-top: 1px; }
+
+.stats-row {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px;
+  padding: 20px 24px;
+}
+.stat-card {
+  background: var(--surface); border: 1px solid var(--border); border-radius: 10px;
+  padding: 14px 18px;
+}
+.stat-label { color: var(--muted); font-size: 11px; text-transform: uppercase; letter-spacing: .06em; }
+.stat-value { font-size: 22px; font-weight: 700; margin-top: 4px; }
+.stat-sub { color: var(--muted); font-size: 11px; margin-top: 3px; }
+.stat-delta { font-size: 11px; margin-top: 3px; }
+.up   { color: var(--red);   }
+.down { color: var(--green); }
+
+.charts-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
+  padding: 0 24px 24px;
+}
+.chart-full { grid-column: 1 / -1; }
+.chart-card {
+  background: var(--surface); border: 1px solid var(--border); border-radius: 10px;
+  padding: 16px 20px;
+}
+.chart-title { font-size: 13px; font-weight: 600; margin-bottom: 14px; color: var(--text); }
+.chart-sub { font-size: 11px; color: var(--muted); margin-left: 8px; font-weight: 400; }
+.chart-wrap { position: relative; height: 260px; }
+.chart-wrap-tall { position: relative; height: 300px; }
+
+.loading { text-align: center; color: var(--muted); padding: 40px; }
+.badge {
+  display: inline-block; font-size: 10px; font-weight: 600; border-radius: 4px;
+  padding: 1px 6px; margin-left: 6px; vertical-align: middle;
+}
+.badge-blue { background: var(--blue-dim); color: var(--blue); }
+.badge-teal { background: var(--teal-dim); color: var(--teal); }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">
+    <span class="logo-icon">⚡💧</span>
+    <div>
+      <h1>HOUSE-58 Utility</h1>
+      <div class="sub" id="last-updated">Loading…</div>
+    </div>
+  </div>
+</header>
+
+<div class="stats-row" id="stats-row">
+  <div class="loading">Loading data…</div>
+</div>
+
+<div class="charts-grid">
+
+  <!-- Row 1: combined cost (full width) -->
+  <div class="chart-card chart-full">
+    <div class="chart-title">
+      Monthly Bills
+      <span class="badge badge-blue">MEA Electricity</span>
+      <span class="badge badge-teal">MWA Water</span>
+    </div>
+    <div class="chart-wrap-tall"><canvas id="chart-combined"></canvas></div>
+  </div>
+
+  <!-- Row 2: kWh usage | m³ usage -->
+  <div class="chart-card">
+    <div class="chart-title">Electricity Usage <span class="chart-sub">kWh/month</span></div>
+    <div class="chart-wrap"><canvas id="chart-kwh"></canvas></div>
+  </div>
+  <div class="chart-card">
+    <div class="chart-title">Water Usage <span class="chart-sub">m³/month</span></div>
+    <div class="chart-wrap"><canvas id="chart-m3"></canvas></div>
+  </div>
+
+  <!-- Row 3: YoY comparison — split by utility -->
+  <div class="chart-card">
+    <div class="chart-title">⚡ Electricity YoY <span class="chart-sub">MEA ฿/month</span></div>
+    <div class="chart-wrap-tall"><canvas id="chart-yoy-mea"></canvas></div>
+  </div>
+  <div class="chart-card">
+    <div class="chart-title">💧 Water YoY <span class="chart-sub">MWA ฿/month</span></div>
+    <div class="chart-wrap-tall"><canvas id="chart-yoy-mwa"></canvas></div>
+  </div>
+
+</div>
+
+<script>
+const BLUE  = '#3b82f6';
+const TEAL  = '#14b8a6';
+const BLUEA = 'rgba(59,130,246,.55)';
+const TEALA = 'rgba(20,184,166,.55)';
+
+Chart.defaults.color = '#64748b';
+Chart.defaults.borderColor = '#e2e8f0';
+
+function fmt(n) {
+  if (n == null) return '–';
+  return n.toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 0 });
+}
+function fmtB(n) {
+  if (n == null) return '–';
+  return '฿' + n.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+}
+function shortMonth(ym) {
+  const [y, m] = ym.split('-');
+  const d = new Date(+y, +m - 1);
+  return d.toLocaleString('en-US', { month: 'short', year: '2-digit' });
+}
+
+let charts = {};
+
+function makeChart(id, type, labels, datasets, opts = {}) {
+  if (charts[id]) charts[id].destroy();
+  const ctx = document.getElementById(id).getContext('2d');
+  charts[id] = new Chart(ctx, {
+    type,
+    data: { labels, datasets },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: { position: 'top', labels: { boxWidth: 12, font: { size: 11 } } },
+        tooltip: { mode: 'index', intersect: false }
+      },
+      scales: {
+        x: { grid: { color: '#e2e8f0' }, ticks: { font: { size: 11 } } },
+        y: { grid: { color: '#e2e8f0' }, ticks: { font: { size: 11 } } },
+        ...opts.scales
+      },
+      ...opts
+    }
+  });
+}
+
+function renderStats(stats) {
+  const ytd = stats.mea_ytd + stats.mwa_ytd;
+  const ytdPrev = stats.mea_ytd_prev + stats.mwa_ytd_prev;
+
+  function deltaHtml(curr, prev) {
+    if (!prev) return '';
+    const pct = ((curr - prev) / prev * 100).toFixed(1);
+    const cls = pct > 0 ? 'up' : 'down';
+    const sign = pct > 0 ? '▲' : '▼';
+    return `<div class="stat-delta ${cls}">${sign} ${Math.abs(pct)}% vs ${stats.last_year}</div>`;
+  }
+
+  document.getElementById('stats-row').innerHTML = `
+    <div class="stat-card">
+      <div class="stat-label">⚡ Electricity YTD ${stats.current_year}</div>
+      <div class="stat-value" style="color:var(--blue)">${fmtB(stats.mea_ytd)}</div>
+      ${deltaHtml(stats.mea_ytd, stats.mea_ytd_prev)}
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">💧 Water YTD ${stats.current_year}</div>
+      <div class="stat-value" style="color:var(--teal)">${fmtB(stats.mwa_ytd)}</div>
+      ${deltaHtml(stats.mwa_ytd, stats.mwa_ytd_prev)}
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Combined YTD ${stats.current_year}</div>
+      <div class="stat-value">${fmtB(ytd)}</div>
+      ${deltaHtml(ytd, ytdPrev)}
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Data Coverage</div>
+      <div class="stat-value">${stats.total_bills}</div>
+      <div class="stat-sub">months tracked</div>
+    </div>
+  `;
+}
+
+function renderCharts(rows) {
+  const labels = rows.map(r => shortMonth(r.month));
+
+  makeChart('chart-combined', 'bar', labels, [
+    {
+      label: 'MEA Electricity',
+      data: rows.map(r => r.mea_total),
+      backgroundColor: BLUEA,
+      borderColor: BLUE,
+      borderWidth: 1,
+      stack: 'bills',
+    },
+    {
+      label: 'MWA Water',
+      data: rows.map(r => r.mwa_total),
+      backgroundColor: TEALA,
+      borderColor: TEAL,
+      borderWidth: 1,
+      stack: 'bills',
+    }
+  ], {
+    scales: {
+      y: {
+        stacked: true,
+        grid: { color: '#e2e8f0' },
+        ticks: { callback: v => '฿' + fmt(v), font: { size: 11 } }
+      },
+      x: { stacked: true, grid: { color: '#e2e8f0' }, ticks: { font: { size: 11 } } }
+    }
+  });
+
+  makeChart('chart-kwh', 'bar', labels, [{
+    label: 'kWh',
+    data: rows.map(r => r.mea_units),
+    backgroundColor: BLUEA,
+    borderColor: BLUE,
+    borderWidth: 1,
+  }], {
+    plugins: { legend: { display: false } },
+    scales: { y: { grid: { color: '#e2e8f0' }, ticks: { font: { size: 11 } } } }
+  });
+
+  makeChart('chart-m3', 'bar', labels, [{
+    label: 'm³',
+    data: rows.map(r => r.mwa_units),
+    backgroundColor: TEALA,
+    borderColor: TEAL,
+    borderWidth: 1,
+  }], {
+    plugins: { legend: { display: false } },
+    scales: { y: { grid: { color: '#e2e8f0' }, ticks: { font: { size: 11 } } } }
+  });
+
+  const years  = [...new Set(rows.map(r => r.month.slice(0, 4)))].sort();
+  const months = ['01','02','03','04','05','06','07','08','09','10','11','12'];
+  const mLabels = months.map(m => new Date(2000, +m - 1).toLocaleString('en-US', { month: 'short' }));
+  const YOY_PALETTE = ['#94a3b8','#f59e0b','#22c55e','#ef4444'];
+
+  function makeYoyChart(canvasId, field) {
+    const datasets = years.map((yr, i) => {
+      const byMonth = {};
+      rows.filter(r => r.month.startsWith(yr)).forEach(r => {
+        byMonth[r.month.slice(5)] = r[field] || null;
+      });
+      return {
+        label: yr,
+        data: months.map(m => byMonth[m] || null),
+        borderColor: YOY_PALETTE[i % YOY_PALETTE.length],
+        backgroundColor: 'transparent',
+        borderWidth: 2.5,
+        pointRadius: 4,
+        tension: 0.3,
+        spanGaps: false,
+      };
+    });
+    makeChart(canvasId, 'line', mLabels, datasets, {
+      scales: {
+        y: { grid: { color: '#e2e8f0' }, ticks: { callback: v => '฿' + fmt(v), font: { size: 11 } } },
+        x: { grid: { color: '#e2e8f0' }, ticks: { font: { size: 11 } } }
+      }
+    });
+  }
+
+  makeYoyChart('chart-yoy-mea', 'mea_total');
+  makeYoyChart('chart-yoy-mwa', 'mwa_total');
+}
+
+async function load() {
+  const resp = await fetch('./data.json');
+  const data = await resp.json();
+  const lastMonth = data.rows[data.rows.length - 1]?.month ?? '';
+  document.getElementById('last-updated').textContent = 'Data through ' + lastMonth;
+  renderStats(data.stats);
+  renderCharts(data.rows);
+}
+
+load();
+</script>
+</body>
+</html>

@@ -1,0 +1,265 @@
+{
+  "rows": [
+    {
+      "month": "2023-06",
+      "mea_units": 657495230.0,
+      "mea_total": 35652.74,
+      "mwa_units": null,
+      "mwa_total": null
+    },
+    {
+      "month": "2023-07",
+      "mea_units": 21545750026.0,
+      "mea_total": 33672.43,
+      "mwa_units": null,
+      "mwa_total": null
+    },
+    {
+      "month": "2023-08",
+      "mea_units": 23480249322.0,
+      "mea_total": 30499.38,
+      "mwa_units": null,
+      "mwa_total": null
+    },
+    {
+      "month": "2023-09",
+      "mea_units": 23525272290.0,
+      "mea_total": 28684.56,
+      "mwa_units": null,
+      "mwa_total": null
+    },
+    {
+      "month": "2023-10",
+      "mea_units": 25189431117.0,
+      "mea_total": 21501.77,
+      "mwa_units": null,
+      "mwa_total": null
+    },
+    {
+      "month": "2023-11",
+      "mea_units": 26222741031.0,
+      "mea_total": 24704.64,
+      "mwa_units": null,
+      "mwa_total": null
+    },
+    {
+      "month": "2023-12",
+      "mea_units": 5046.0,
+      "mea_total": 24764.05,
+      "mwa_units": null,
+      "mwa_total": null
+    },
+    {
+      "month": "2024-01",
+      "mea_units": 4758.0,
+      "mea_total": 24317.87,
+      "mwa_units": null,
+      "mwa_total": null
+    },
+    {
+      "month": "2024-02",
+      "mea_units": 4544.0,
+      "mea_total": 23214.43,
+      "mwa_units": null,
+      "mwa_total": null
+    },
+    {
+      "month": "2024-03",
+      "mea_units": 5501.0,
+      "mea_total": 28148.94,
+      "mwa_units": null,
+      "mwa_total": null
+    },
+    {
+      "month": "2024-04",
+      "mea_units": 6054.0,
+      "mea_total": 31000.33,
+      "mwa_units": null,
+      "mwa_total": null
+    },
+    {
+      "month": "2024-05",
+      "mea_units": 5350.0,
+      "mea_total": 27370.35,
+      "mwa_units": null,
+      "mwa_total": null
+    },
+    {
+      "month": "2024-06",
+      "mea_units": 5628.0,
+      "mea_total": 28803.78,
+      "mwa_units": null,
+      "mwa_total": null
+    },
+    {
+      "month": "2024-07",
+      "mea_units": 5219.0,
+      "mea_total": 26694.88,
+      "mwa_units": null,
+      "mwa_total": null
+    },
+    {
+      "month": "2024-08",
+      "mea_units": 5720.0,
+      "mea_total": 29278.14,
+      "mwa_units": null,
+      "mwa_total": null
+    },
+    {
+      "month": "2024-09",
+      "mea_units": 6869.0,
+      "mea_total": 35202.66,
+      "mwa_units": null,
+      "mwa_total": null
+    },
+    {
+      "month": "2024-10",
+      "mea_units": 7158.0,
+      "mea_total": 36692.8,
+      "mwa_units": null,
+      "mwa_total": null
+    },
+    {
+      "month": "2024-11",
+      "mea_units": 6471.0,
+      "mea_total": 33150.47,
+      "mwa_units": null,
+      "mwa_total": null
+    },
+    {
+      "month": "2024-12",
+      "mea_units": 5110.0,
+      "mea_total": 26132.86,
+      "mwa_units": null,
+      "mwa_total": null
+    },
+    {
+      "month": "2025-01",
+      "mea_units": 5435.0,
+      "mea_total": 53767.02,
+      "mwa_units": null,
+      "mwa_total": null
+    },
+    {
+      "month": "2025-02",
+      "mea_units": 6088.0,
+      "mea_total": 30980.21,
+      "mwa_units": null,
+      "mwa_total": null
+    },
+    {
+      "month": "2025-03",
+      "mea_units": 8411.0,
+      "mea_total": 42883.56,
+      "mwa_units": null,
+      "mwa_total": null
+    },
+    {
+      "month": "2025-04",
+      "mea_units": 6020.0,
+      "mea_total": 30631.77,
+      "mwa_units": null,
+      "mwa_total": null
+    },
+    {
+      "month": "2025-05",
+      "mea_units": 5762.0,
+      "mea_total": 28261.65,
+      "mwa_units": 172.0,
+      "mwa_total": 2220.57
+    },
+    {
+      "month": "2025-06",
+      "mea_units": 4812.0,
+      "mea_total": 23566.54,
+      "mwa_units": 160.0,
+      "mwa_total": 2041.45
+    },
+    {
+      "month": "2025-07",
+      "mea_units": 3490.0,
+      "mea_total": 17032.91,
+      "mwa_units": 165.0,
+      "mwa_total": 2116.09
+    },
+    {
+      "month": "2025-08",
+      "mea_units": 3690.0,
+      "mea_total": 18021.36,
+      "mwa_units": 181.0,
+      "mwa_total": 2354.91
+    },
+    {
+      "month": "2025-09",
+      "mea_units": 3465.0,
+      "mea_total": 16761.06,
+      "mwa_units": 188.0,
+      "mwa_total": 2459.4
+    },
+    {
+      "month": "2025-10",
+      "mea_units": 3227.0,
+      "mea_total": 15594.99,
+      "mwa_units": 283.0,
+      "mwa_total": 3935.14
+    },
+    {
+      "month": "2025-11",
+      "mea_units": 2911.0,
+      "mea_total": 14046.78,
+      "mwa_units": 165.0,
+      "mwa_total": 2116.09
+    },
+    {
+      "month": "2025-12",
+      "mea_units": 4046.0,
+      "mea_total": 19607.62,
+      "mwa_units": 196.0,
+      "mwa_total": 2578.81
+    },
+    {
+      "month": "2026-01",
+      "mea_units": 4577.0,
+      "mea_total": 21915.37,
+      "mwa_units": 165.0,
+      "mwa_total": 2116.09
+    },
+    {
+      "month": "2026-02",
+      "mea_units": 8359.0,
+      "mea_total": 39986.7,
+      "mwa_units": 214.0,
+      "mwa_total": 2857.22
+    },
+    {
+      "month": "2026-03",
+      "mea_units": 11301.0,
+      "mea_total": 54427.41,
+      "mwa_units": 199.0,
+      "mwa_total": 2623.59
+    },
+    {
+      "month": "2026-04",
+      "mea_units": 9425.0,
+      "mea_total": 45356.53,
+      "mwa_units": 237.0,
+      "mwa_total": 3216.53
+    },
+    {
+      "month": "2026-05",
+      "mea_units": 5102.0,
+      "mea_total": 24809.24,
+      "mwa_units": 192.0,
+      "mwa_total": 2519.1
+    }
+  ],
+  "stats": {
+    "mea_ytd": 186495.25,
+    "mwa_ytd": 13332.53,
+    "mea_ytd_prev": 311155.47,
+    "mwa_ytd_prev": 19822.46,
+    "current_year": "2026",
+    "last_year": "2025",
+    "total_bills": 36
+  }
+}
