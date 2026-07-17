@@ -129,6 +129,8 @@ const TEAL  = '#14b8a6';
 const BLUEA = 'rgba(59,130,246,.55)';
 const TEALA = 'rgba(20,184,166,.55)';
 
+const THAI_MONTHS = ['ม.ค.','ก.พ.','มี.ค.','เม.ย.','พ.ค.','มิ.ย.','ก.ค.','ส.ค.','ก.ย.','ต.ค.','พ.ย.','ธ.ค.'];
+
 Chart.defaults.color = '#64748b';
 Chart.defaults.borderColor = '#e2e8f0';
 
@@ -142,8 +144,8 @@ function fmtB(n) {
 }
 function shortMonth(ym) {
   const [y, m] = ym.split('-');
-  const d = new Date(+y, +m - 1);
-  return d.toLocaleString('en-US', { month: 'short', year: '2-digit' });
+  const thaiYY = String(+y + 543).slice(-2);
+  return THAI_MONTHS[+m - 1] + ' ' + thaiYY;
 }
 
 let charts = {};
@@ -248,7 +250,7 @@ function renderCharts(rows) {
 
   const years  = [...new Set(rows.map(r => r.month.slice(0, 4)))].sort();
   const months = ['01','02','03','04','05','06','07','08','09','10','11','12'];
-  const mLabels = months.map(m => new Date(2000, +m - 1).toLocaleString('en-US', { month: 'short' }));
+  const mLabels = months.map(m => THAI_MONTHS[+m - 1]);
   const YOY_PALETTE = ['#94a3b8','#f59e0b','#22c55e','#ef4444'];
 
   function makeYoyChart(canvasId, field) {
@@ -258,7 +260,7 @@ function renderCharts(rows) {
         byMonth[r.month.slice(5)] = r[field] || null;
       });
       return {
-        label: yr,
+        label: String(+yr + 543),
         data: months.map(m => byMonth[m] || null),
         borderColor: YOY_PALETTE[i % YOY_PALETTE.length],
         backgroundColor: 'transparent',
