@@ -178,28 +178,30 @@ function makeChart(id, type, labels, datasets, opts = {}) {
 function renderStats(stats) {
   const ytd = stats.mea_ytd + stats.mwa_ytd;
   const ytdPrev = stats.mea_ytd_prev + stats.mwa_ytd_prev;
+  const beYear = +stats.current_year + 543;
+  const beLastYear = +stats.last_year + 543;
 
   function deltaHtml(curr, prev) {
     if (!prev) return '';
     const pct = ((curr - prev) / prev * 100).toFixed(1);
     const cls = pct > 0 ? 'up' : 'down';
     const sign = pct > 0 ? '▲' : '▼';
-    return `<div class="stat-delta ${cls}">${sign} ${Math.abs(pct)}% vs ${stats.last_year}</div>`;
+    return `<div class="stat-delta ${cls}">${sign} ${Math.abs(pct)}% vs ${beLastYear}</div>`;
   }
 
   document.getElementById('stats-row').innerHTML = `
     <div class="stat-card">
-      <div class="stat-label">⚡ Electricity YTD ${stats.current_year}</div>
+      <div class="stat-label">⚡ Electricity YTD ${beYear}</div>
       <div class="stat-value" style="color:var(--blue)">${fmtB(stats.mea_ytd)}</div>
       ${deltaHtml(stats.mea_ytd, stats.mea_ytd_prev)}
     </div>
     <div class="stat-card">
-      <div class="stat-label">💧 Water YTD ${stats.current_year}</div>
+      <div class="stat-label">💧 Water YTD ${beYear}</div>
       <div class="stat-value" style="color:var(--teal)">${fmtB(stats.mwa_ytd)}</div>
       ${deltaHtml(stats.mwa_ytd, stats.mwa_ytd_prev)}
     </div>
     <div class="stat-card">
-      <div class="stat-label">Combined YTD ${stats.current_year}</div>
+      <div class="stat-label">Combined YTD ${beYear}</div>
       <div class="stat-value">${fmtB(ytd)}</div>
       ${deltaHtml(ytd, ytdPrev)}
     </div>
