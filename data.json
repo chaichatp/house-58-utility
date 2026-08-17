@@ -1,6 +1,13 @@
 {
   "rows": [
     {
+      "month": "2023-11",
+      "mea_units": 4308.0,
+      "mea_total": 21110.68,
+      "mwa_units": null,
+      "mwa_total": null
+    },
+    {
       "month": "2023-12",
       "mea_units": 5046.0,
       "mea_total": 24764.05,
@@ -212,8 +219,8 @@
     },
     {
       "month": "2026-06",
-      "mea_units": 5102.0,
-      "mea_total": 24809.24,
+      "mea_units": 5389.0,
+      "mea_total": 26216.95,
       "mwa_units": 149.0,
       "mwa_total": 1881.15
     },
@@ -226,12 +233,12 @@
     }
   ],
   "stats": {
-    "mea_ytd": 235270.1,
+    "mea_ytd": 236677.81,
     "mwa_ytd": 17036.53,
     "mea_ytd_prev": 311155.47,
     "mwa_ytd_prev": 19822.46,
     "current_year": "2026",
     "last_year": "2025",
-    "total_bills": 32
+    "total_bills": 33
   }
 }
