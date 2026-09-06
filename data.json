@@ -230,15 +230,22 @@
       "mea_total": 23965.61,
       "mwa_units": 145.0,
       "mwa_total": 1822.85
+    },
+    {
+      "month": "2026-08",
+      "mea_units": null,
+      "mea_total": null,
+      "mwa_units": 130.0,
+      "mwa_total": 1604.25
     }
   ],
   "stats": {
     "mea_ytd": 236677.81,
-    "mwa_ytd": 17036.53,
+    "mwa_ytd": 18640.78,
     "mea_ytd_prev": 311155.47,
     "mwa_ytd_prev": 19822.46,
     "current_year": "2026",
     "last_year": "2025",
-    "total_bills": 33
+    "total_bills": 34
   }
 }
